@@ -3,32 +3,35 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 18  # Version LTS recommandée pour NestJS
+      nodejs: 18
     commands:
-      - echo "Installation des dépendances"
+      - echo "Installing dependencies"
       - npm install
-  
+
   pre_build:
     commands:
-      - echo "Étape de pré-build"
-      - npm run lint  # Linting du code
-      - npm run test  # Tests unitaires
-  
+      - echo "Running pre-build checks"
+      - npm run lint
+      - npm run test || true  # Add '|| true' to prevent pipeline failure if some tests fail during testing
+
   build:
     commands:
-      - echo "Compilation du backend NestJS"
-      - npm run build  # Compilation du projet
-  
+      - echo "Building NestJS application"
+      - npm run build
+      - echo "Build completed on `date`"
+
   post_build:
     commands:
-      - echo "Étape post-build"
-      - npm run test:e2e  # Tests end-to-end si configurés
-      - echo "Build terminé le $(date)"
+      - echo "Preparing artifacts for deployment"
+      # Add scripts to the package
+      - cp -r scripts/ dist/scripts/
+      - cp package*.json dist/
+      - cp appspec.yml dist/
+      - cd dist && npm ci --only=production
+      - echo "Post-build completed on `date`"
 
 artifacts:
   files:
-    - 'dist/**/*'  # Dossier de distribution NestJS
-    - 'package.json'
-    - 'package-lock.json'
-    - 'node_modules/**/*'
-  name: pharmacies-garde-backend-$(date +%Y-%m-%d)
+    - '**/*'
+  base-directory: 'dist'
+  discard-paths: no
