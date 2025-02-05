@@ -12,7 +12,12 @@ phases:
     commands:
       - echo "Running pre-build checks"
       - npm run lint || echo "Linting completed with warnings"
-      - npm run test || true  # Continue even if tests fail
+      - npm run test -- --verbose || {
+          echo "Tests failed but continuing pipeline";
+          echo "Test output:";
+          cat test-output.log;
+          true;
+        }
 
   build:
     commands:
@@ -35,3 +40,9 @@ artifacts:
     - '**/*'
   base-directory: 'dist'
   discard-paths: no
+
+reports:
+  jest_reports:
+    files:
+      - 'junit.xml'
+    file-format: JUNITXML
