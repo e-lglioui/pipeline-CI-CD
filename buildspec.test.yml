@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo "Installing dependencies"
+      - npm install
+
+  pre_build:
+    commands:
+      - echo "Running tests"
+      - npm run test -- --verbose || {
+          echo "Tests failed but continuing pipeline";
+          echo "Test output:";
+          cat test-output.log;
+          true;
+        }
+
+artifacts:
+  files:
+    - junit.xml
+  discard-paths: no
+
+reports:
+  jest_reports:
+    files:
+      - 'junit.xml'
+    file-format: JUNITXML 

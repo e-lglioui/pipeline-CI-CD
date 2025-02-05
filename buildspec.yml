@@ -32,12 +32,14 @@ phases:
       - cp -r scripts/ dist/scripts/
       - cp package*.json dist/
       - cp appspec.yml dist/
+      - cp buildspec.yml dist/
       - cd dist && npm ci --only=production
       - echo "Post-build completed on `date`"
 
 artifacts:
   files:
     - '**/*'
+    - buildspec.yml
   base-directory: 'dist'
   discard-paths: no
 
