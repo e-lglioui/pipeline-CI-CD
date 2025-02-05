@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PharmacyReviewController } from './pharmacy-review.controller';
 import { PharmacyReviewService } from '../providers/pharmacy-review.service';
-import { IPharmacyReviewRepository } from '../interfaces/pharmacy-review.repository.interface';
 
 describe('PharmacyReviewController', () => {
   let controller: PharmacyReviewController;

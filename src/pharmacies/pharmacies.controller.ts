@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { PharmaciesService } from './pharmacies.service';
 import { Pharmacy } from './schemas/pharmacy.schema';
-import { Types } from 'mongoose';
+// import { Types } from 'mongoose';  // Remove this line if not used
 import { ObjectIdTransformer } from 'src/common/transformers/object_id.transformer';
 
 @Controller('pharmacies')
