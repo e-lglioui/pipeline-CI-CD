@@ -11,8 +11,10 @@ import { PharmacyReviewModule } from './pharmacy-review/pharmacy-review.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { PharmaciesModule } from './pharmacies/pharmacies.module';
 import { FavoritePharmacyModule } from './favorate_pharmacy/favorite_pharmacy.module';
+
 @Module({
   imports: [
+ 
     ConfigModule.forRoot({
       isGlobal: true,
       load: [databaseConfig],
