@@ -7,10 +7,16 @@ phases:
     commands:
       - echo "Installing dependencies"
       - npm install
-
+      - npm install -g @nestjs/cli  
   pre_build:
     commands:
       - echo "Running pre-build checks"
+      - echo "NestJS CLI version:"
+      - nest --version
+      - echo "Node.js version:"
+      - node --version
+      - echo "npm version:"
+      - npm --version
       - npm run lint || echo "Linting completed with warnings"
       - npm run test -- --verbose || {
           echo "Tests failed but continuing pipeline";
